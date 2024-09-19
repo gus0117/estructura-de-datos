@@ -12,15 +12,24 @@ typedef struct tnodo{
     pnodo siguiente;
 };
 
+/*
+    Inicializa la lista
+*/
 void iniciar_lista(pnodo &lista){
     lista = NULL;
 }
 
+/*
+    Agrega un nodo al principio de la lista
+*/
 void agregar_inicio(pnodo &lista, pnodo nuevo){
-    nuevo -> siguiente = lista;
+    nuevo->siguiente = lista;
     lista = nuevo;
 }
 
+/*
+    Crea un nuevo nodo
+*/
 void crear_nodo(pnodo &nuevo){
     nuevo = new tnodo;
     if(nuevo != NULL){
@@ -33,6 +42,9 @@ void crear_nodo(pnodo &nuevo){
     }
 }
 
+/*
+    Agrega un nodo al final de la lista
+*/
 void agregar_final(pnodo &lista, pnodo nuevo){
     pnodo i;
     if(lista == NULL){
@@ -44,6 +56,10 @@ void agregar_final(pnodo &lista, pnodo nuevo){
     }
 }
 
+/*
+    Agrega un nodo de manera ordenada
+    de forma creciente (menor a mayor)
+*/
 void agregar_ordenado(pnodo &lista, pnodo nuevo){
     pnodo i;
     if(lista == NULL){
@@ -62,6 +78,9 @@ void agregar_ordenado(pnodo &lista, pnodo nuevo){
     }
 }
 
+/*
+    Elimina el nodo del inicio de la lista
+*/
 pnodo eliminar_inicio(pnodo &lista){
     pnodo borrado;
     if(lista==NULL){
@@ -75,6 +94,9 @@ pnodo eliminar_inicio(pnodo &lista){
     return borrado;
 }
 
+/*
+    Eliminar el nodo del final de la lista
+*/
 pnodo eliminar_final(pnodo &lista){
     pnodo borrado, i;
     if(lista == NULL){
@@ -94,6 +116,9 @@ pnodo eliminar_final(pnodo &lista){
     return borrado;
 }
 
+/*
+    Elimina un nodo especifico de la lista
+*/
 pnodo eliminar_nodo(pnodo &lista, int valor){
     pnodo borrado, i;
     if(lista == NULL){
@@ -120,7 +145,10 @@ pnodo eliminar_nodo(pnodo &lista, int valor){
     return borrado;
 }
 
-void mostrar(pnodo lista){
+/*
+    Muestra los elementos de la lista por pantalla
+*/
+void mostrar_lista(pnodo lista){
     pnodo i;
     if(lista != NULL){
         for(i = lista; i != NULL; i = i->siguiente){
@@ -132,6 +160,11 @@ void mostrar(pnodo lista){
     }
 }
 
+/*
+    Busca un valor dentro de la lista
+    Retorna true si el valor está dentro de la lista
+    y false si no lo está.
+*/
 bool buscar_nodo(pnodo lista, int valor){
     pnodo i;
     bool encontrado = false;

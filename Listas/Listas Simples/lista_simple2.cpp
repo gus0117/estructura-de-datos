@@ -1,63 +1,150 @@
-#include <iostream>
+#include<iostream>
 
 using namespace std;
 
-/*
-    TDA Lista implementado del tipo nodo y el puntero a este
-    inicio es un puntero que indica el primer nodo de la lista
-    final es un puntero que indica el último nodo de la lista
-*/
 typedef struct tnodo *pnodo;
-
 typedef struct tnodo{
     int dato;
-    pnodo siguiente;
+    pnodo sig;
 };
-
 typedef struct tlista{
     pnodo inicio;
-    pnodo final;
+    pnodo fin;
 };
 
-void iniciar_lista(tlista &lista){
+void IniciarLista(tlista &lista)
+{
     lista.inicio = NULL;
-    lista.final = NULL;
+    lista.fin = NULL;
 }
 
-void agregar_final(tlista &lista, pnodo nuevo){
-    if(lista.inicio == NULL){
+void CrearNodo(pnodo &nuevo)
+{
+    nuevo = new tnodo;
+    if(nuevo != NULL)
+    {
+        cout << "Ingrese dato: ";
+        cin >> nuevo -> dato;
+        nuevo -> sig = NULL;
+    }
+}
+
+void AgregarInicio(tlista &lista, pnodo nuevo)
+{
+    if(lista.inicio == NULL)
+    {
         lista.inicio = nuevo;
-        lista.final = nuevo;
+        lista.fin = nuevo;
     }
-    else{
-        lista.final->siguiente = nuevo;
-        lista.final = nuevo;
+    else
+    {
+        nuevo -> sig = lista.inicio;
+        lista.inicio = nuevo;
     }
 }
-
-pnodo eliminar_final(tlista &lista){
-    pnodo borrado, i;
-    if(lista.inicio == NULL){
-        borrado = NULL;
+void AgregarFinal(tlista &lista, pnodo nuevo)
+{
+    if(lista.fin == NULL){
+        lista.inicio = nuevo;
+        lista.fin = nuevo;
     }
     else{
-        if(lista.inicio == lista.final){
-            borrado = lista.inicio;
-            lista.inicio = NULL;
-            lista.final = NULL;
+        lista.fin -> sig = nuevo;
+        lista.fin = nuevo;
+    }
+}
+void AgregarOrden(tlista &lista, pnodo nuevo)
+{
+    pnodo i;
+    if(lista.inicio == NULL)
+    {
+        AgregarInicio(lista, nuevo);
+    }
+    else
+    {
+        if(nuevo -> dato <= lista.inicio -> dato){
+            nuevo -> sig = lista.inicio;
+            lista.inicio = nuevo;
         }
         else{
-            for(i = lista.inicio; (i->siguiente)->siguiente != NULL; i=i->siguiente);
-            borrado = lista.final;
-            lista.final = i;
-            lista.final->siguiente = NULL;
-
+            if(nuevo -> dato >= lista.fin -> dato){
+                lista.fin -> sig = nuevo;
+                lista.fin = nuevo;
+            }
+            else{
+                for(i = lista.inicio; (i -> sig) -> sig != NULL && nuevo -> dato <= (i -> sig) -> dato; i = i -> sig);
+                nuevo -> sig = i -> sig;
+                i -> sig = nuevo;
+            }
         }
     }
-    return borrado;
 }
+pnodo QuitarInicio(tlista &lista)
+{
+    pnodo extraido;
+    extraido = lista.inicio;
+    lista.inicio = lista.inicio -> sig;
+    return extraido;
+}
+pnodo QuitarFinal(tlista &lista)
+{
+    pnodo extraido, i;
+    if(lista.fin == NULL){
+        extraido = NULL;
+    }
+    else{
+        for(i = lista.inicio; (i -> sig) -> sig != NULL; i = i -> sig);
+        extraido = i -> sig;
+        i -> sig = NULL;
+        lista.fin = i;
+    }
 
-int main(){
+    return extraido;
+}
+pnodo QuitarNodo(tlista &lista, int valor)
+{
+    pnodo extraido, i;
+    if(lista.inicio == NULL){
+        extraido = NULL;
+    }
+    else{
+        for(i = lista.inicio; i -> sig != lista.fin && valor != (i -> sig) -> dato; i = i -> sig);
+        extraido = i -> sig;
+        i -> sig = NULL;
+        lista.fin = i;
+    }
+    return extraido;
+}
+bool BuscarNodo(tlista lista, int valor)
+{
+    pnodo i;
+    bool encontrado;
+    for(i = lista.inicio; i != NULL && i -> dato != valor; i = i -> sig);
+    encontrado = i == NULL;
+    return encontrado;
+}
+void MostrarLista(tlista lista)
+{
+    pnodo i;
+    for(i = lista.inicio; i != NULL; i = i -> sig){
+        cout << i->dato << endl;
+    }
+}
+main()
+{
+    tlista lista;
+    pnodo nuevo;
+    IniciarLista(lista);
+    for(int i = 0; i < 5; i++){
+        CrearNodo(nuevo);
+        //AgregarInicio(lista, nuevo);
+        //AgregarFinal(lista, nuevo);
+        AgregarOrden(lista, nuevo);
+    }
 
-    return 0;
+    //pnodo borrado = QuitarInicio(lista);
+    //pnodo borrado = QuitarFinal(lista);
+    //pnodo borrado = QuitarNodo(lista, 5);
+    //cout << "Borrado: " << borrado -> dato << endl;
+    MostrarLista(lista);
 }
