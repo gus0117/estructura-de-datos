@@ -101,9 +101,28 @@ int bottom_queue(t_cola c){
     return extraido;
 }
 
+void incognita(int t){
+    int num = 2, aux, temp;
+    t_pila p;
+    init_stack(p);
+    push_stack(p, 1);
+    push_stack(p, 1);
+    while(num < t){
+        aux = 0;
+        temp = 0;
+        temp = top_stack(p);
+        aux += pop_stack(p);
+        aux += pop_stack(p);
+        push_stack(p, temp);
+        push_stack(p, aux);
+        num++;
+    }
+    cout<<top_stack(p)<<endl;
+}
+
 int main(){
     t_cola c;
     init_queue(c);
-    
+    incognita(17);
     return 0;
 }

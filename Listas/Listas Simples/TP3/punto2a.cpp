@@ -15,7 +15,7 @@ struct tlista{
 };
 
 bool esta_vacia(tlista lista){
-    return lista.contador == 0;
+    return lista.inicio == NULL && lista.fin == NULL;
 }
 
 void crear_nodo(pnodo &nuevo, int valor){
@@ -147,7 +147,7 @@ pnodo eliminar_nodo(tlista &lista, int valor){
             else{
                 borrado = NULL;
             }
-
+            
         }
         lista.contador--;
     }
@@ -169,6 +169,7 @@ void mostrar_lista(tlista lista){
 int obtener_cantidad(tlista lista){
     return lista.contador;
 }
+
 int main(){
     tlista lista;
     iniciar_lista(lista);
@@ -192,7 +193,8 @@ int main(){
     //eliminar_nodo(lista, 11);
 
     mostrar_lista(lista);
-    cout << "Cantidad = " <<obtener_cantidad(lista) << endl;
+
+    cout << "Cantidad= "<<obtener_cantidad(lista) << endl;
 
     return 0;
 }

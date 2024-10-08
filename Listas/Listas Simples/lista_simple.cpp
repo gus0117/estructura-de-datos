@@ -30,11 +30,10 @@ void agregar_inicio(pnodo &lista, pnodo nuevo){
 /*
     Crea un nuevo nodo
 */
-void crear_nodo(pnodo &nuevo){
+void crear_nodo(pnodo &nuevo, int valor){
     nuevo = new tnodo;
     if(nuevo != NULL){
-        cout << "Ingrese valor: ";
-        cin >> nuevo -> dato;
+        nuevo -> dato = valor;
         nuevo -> siguiente = NULL;
     }
     else{
@@ -179,6 +178,17 @@ bool buscar_nodo(pnodo lista, int valor){
 }
 
 int main(){
+    pnodo lista;
+    pnodo nodo;
+    //iniciar_lista(lista);
+    crear_nodo(nodo, 2);
+    agregar_inicio(lista, nodo);
+    crear_nodo(nodo, 5);
+    agregar_final(lista, nodo);
+    crear_nodo(nodo, 6);
+    agregar_ordenado(lista, nodo);
+
+    mostrar_lista(lista);
 
     return 0;
 }
