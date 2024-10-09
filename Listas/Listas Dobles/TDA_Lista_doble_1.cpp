@@ -10,6 +10,8 @@ typedef struct tnodo{
                     pnodo sig;
                     pnodo ant;
                     };
+//typedef pnodo tlista[2];
+
 void IniciarLista(pnodo &inicio)
 {
     inicio = NULL;
@@ -123,14 +125,19 @@ pnodo QuitarNodo(pnodo &inicio, int valor)
         if(inicio -> dato == valor)
         {
             extraido = inicio;
+            inicio = inicio->sig;
+            inicio->ant = NULL;
+            extraido->sig = NULL;
         }
-        for(i = inicio; i != NULL && i -> dato != valor; i = i -> sig);
-        if(i != NULL){
-            extraido = i;
-            (i -> ant) -> sig = i -> sig;
-            i -> sig = i -> ant;
-            extraido -> sig = NULL;
-            extraido -> ant = NULL;
+        else{
+            for(i = inicio; i != NULL && i -> dato != valor; i = i -> sig);
+                if(i != NULL){
+                    extraido = i;
+                    (i -> ant) -> sig = i -> sig;
+                    i -> sig = i -> ant;
+                    extraido -> sig = NULL;
+                    extraido -> ant = NULL;
+                }
         }
     }
     return extraido;
@@ -145,18 +152,44 @@ void MostrarLista(pnodo inicio)
         }
     }
 }
+
+void obtenerBinario(int num){
+    int resto;
+    pnodo inicio;
+    IniciarLista(inicio);
+
+    pnodo nuevo;
+    while(num > 0){
+        resto = num % 2;
+        CrearNodo(nuevo, resto);
+        AgregarInicio(inicio, nuevo);
+        num = num / 2;
+    }
+    for(pnodo i=inicio; i != NULL; i=i->sig){
+        cout << i->dato;
+    }
+    cout<<endl;
+
+}
+
 main()
 {
     pnodo inicio, nuevo;
     IniciarLista(inicio);
-    for(int i = 0; i < 6; i++){
+    obtenerBinario(24);
+    /*
+    for(int i = 1; i <= 3; i++){
         CrearNodo(nuevo, i);
         //AgregarInicio(inicio, nuevo);
         //AgregarFinal(inicio, nuevo);
         AgregarOrden(inicio, nuevo);
     }
     MostrarLista(inicio);
-    pnodo borrado = QuitarNodo(inicio, 5);//QuitarFinal(inicio);//QuitarInicio(inicio);
-    cout << "Quitado: " << borrado -> dato << endl;
+    cout << "Eliminando el 1" << endl;
+    //Quitar nodos
+    pnodo quitado = QuitarNodo(inicio, 1);
     MostrarLista(inicio);
+
+    cout << "Nodo quitado = " << quitado->dato << endl;
+    */
 }
