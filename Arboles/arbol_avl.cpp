@@ -6,31 +6,45 @@ struct tnodo{
     int dato;
     pnodo izq;
     pnodo der;
-    int balance;
+    int altura;
 };
 
 void crearNodo(pnodo &nuevo, int dato){
     nuevo->dato = dato;
     nuevo->der = nullptr;
     nuevo->izq = nullptr;
-    nuevo->balance = 0;
+    nuevo->altura = 0;
 }
 
-void calcularBalance(pnodo arbol){
+int calcularAltura(pnodo arbol){
+	if(arbol == nullptr)
+		return 0;
+	else
+		return 1 + max(calcularAltura(arbol->der), calcularAltura(arbol->izq));
+}
 
+int calcularBalance(pnodo arbol){
+	if(arbol == nullptr)
+		return 0;
+	else
+		return (arbol->der)->altura - (arbol->izq)->altura;
+}
+
+void rebalanceo(pnodo &arbol){
+	
 }
 
 void insertar(pnodo &arbol, pnodo nuevo){
     if(arbol == nullptr){
         arbol = nuevo;
-        //Calcular balance
     }
     else{
-        
         if(nuevo->dato > arbol->dato)
             insertar(arbol->der, nuevo);
         else
             insertar(arbol->izq, nuevo);
+        arbol->altura = calcularAltura(arbol);
+        int balance = calcularBalance(arbol);
     }
 }
 
