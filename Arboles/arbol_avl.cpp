@@ -38,9 +38,9 @@ int calcularBalance(pnodo arbol){
 // Hay problemas en la rotación
 void rotacionII(pnodo &p){
     cout << "Rotacion II" << endl;
-    pnodo q = p->izq;   // q es el hijo izquierdo
+    pnodo q = p->izq;   // Q es el hijo izquierdo
     p->izq = q->der;    // el subárbol derecho de Q pasa a ser hijo izquierdo de P
-    q->der = p;         // p pasa a ser hijo derecho de q
+    q->der = p;         // P pasa a ser hijo derecho de q
     p->altura = calcularAltura(p);
     q->altura = calcularAltura(q);
     p = q;              // actualizar raíz local
@@ -48,9 +48,9 @@ void rotacionII(pnodo &p){
 
 void rotacionDD(pnodo &p){
     cout << "Rotacion DD" << endl;
-    pnodo q = p->der;   // q es el hijo derecho
+    pnodo q = p->der;   // Q es el hijo derecho
     p->der = q->izq;    // el subárbol izquierdo de Q pasa a ser hijo derecho de P
-    q->izq = p;         // p pasa a ser hijo izquierdo de q
+    q->izq = p;         // P pasa a ser hijo izquierdo de Q
 
     p->altura = calcularAltura(p);
     q->altura = calcularAltura(q);
@@ -79,6 +79,7 @@ void rotacionDI(pnodo &p){
     p = r;
 }
 
+// Insertar un nodo en el arbol AVL
 void insertar(pnodo &arbol, pnodo nuevo){
     if(arbol == nullptr){
         arbol = nuevo;
@@ -115,26 +116,25 @@ void mostrarPreorden(pnodo nodo){
     }
 }
 
+
+//Funcion auxiliar para probar las inserciones
+void agregarValor(pnodo &arbol, int valor){
+	pnodo nuevo;
+	crearNodo(nuevo, valor);
+    insertar(arbol, nuevo);
+    mostrarPreorden(arbol);
+	cout << endl;
+}
+
 int main(){
     pnodo arbol;
     iniciarArbol(arbol);
-    pnodo nuevo;
-
-    crearNodo(nuevo, 32);
-    insertar(arbol, nuevo);
-    mostrarPreorden(arbol);
-    cout << endl;
     
-    crearNodo(nuevo, 45);
-    insertar(arbol, nuevo);
-    mostrarPreorden(arbol);
-    cout << endl;
-
-    //cout << "Creando desbalance" << endl;
-    crearNodo(nuevo, 40);
-    insertar(arbol, nuevo);
-    mostrarPreorden(arbol);
-    cout << endl;
-
-    return 0;
+    agregarValor(arbol, 21);
+    agregarValor(arbol, 25);
+    agregarValor(arbol, 28);
+    agregarValor(arbol, 33);
+    agregarValor(arbol, 46);
+    agregarValor(arbol, 22);
+    agregarValor(arbol, 20);
 }
